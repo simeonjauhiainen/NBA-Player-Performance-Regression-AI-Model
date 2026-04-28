@@ -1,0 +1,1 @@
+SELECT * FROM prediction_modeldb.players;

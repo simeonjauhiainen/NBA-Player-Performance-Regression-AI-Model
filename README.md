@@ -55,7 +55,7 @@ The project follows a standard ETL (Extract, Transform, Load) architecture:
 
 ## Example Query: Generating a Projection
 
-The Java application relies on SQL subqueries to generate predictions. Here is a query used to grab a player's last 5 stats, which dictates recent form:
+The Java application relies on SQL subqueries to generate predictions. Here is a query used to grab a player's stats from the last 5 games, which dictates recent form:
 
 ```sql
 SELECT player_id,

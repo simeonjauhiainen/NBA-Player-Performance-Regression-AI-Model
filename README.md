@@ -19,9 +19,9 @@ To evaluate the effectiveness of the projections, the model's predictions were t
 ### Overall Error Margins
 | Stat Category | Mean Absolute Error (MAE) | Root Mean Squared Error (RMSE) |
 | :--- | :--- | :--- |
-| **Points (PTS)** | ± 4.59 | 5.98 |
-| **Rebounds (REB)** | ± 1.90 | 2.49 |
-| **Assists (AST)** | ± 1.33 | 1.80 |
+| **Points (PTS)** | 4.59 | 5.98 |
+| **Rebounds (REB)** | 1.90 | 2.49 |
+| **Assists (AST)** | 1.33 | 1.80 |
 
 ---
 

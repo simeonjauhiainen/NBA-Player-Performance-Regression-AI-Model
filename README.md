@@ -1,20 +1,24 @@
 # NBA Player Prediction Model
 
-## Overview
-This project is an end-to-end data pipeline and prediction engine designed to forecast NBA player performance, specifically points, rebounds, assists using real, historical game data. 
+> An end-to-end data pipeline and web application designed to forecast NBA player performance (Points, Rebounds, Assists) using historical game data and machine learning.
 
-Rather than relying on manual spreadsheet tracking, this system automates the entire process: extracting data from the NBA's official endpoints, cleaning and storing it in a relational database, and serving calculated projections through a Java backend. It currently utilizes a Lasso regression AI model to project performance, factoring in season averages and recent game trends while adjusting for opponent.
+## Overview
+Rather than relying on manual spreadsheet tracking, this system automates the entire daily fantasy sports analytical process. It extracts live data from the NBA's official endpoints, cleans and stores it in a relational database, generates predictions using a Lasso regression model, and serves the top value plays through a custom Java web dashboard. 
+
+The model factors in season averages, rolling game trends, rest advantages, and opponent defensive pacing to calculate precise performance projections.
 
 ## Tech Stack
-*   **Data Collection & Processing:** Python 3, Pandas, `nba_api`
-*   **Database:** MySQL
-*   **Backend & Data Serving:** Java (JDBC)
+* **Data Collection & Engineering:** Python 3, `pandas`, `nba_api`
+* **Machine Learning:** `scikit-learn` (LassoCV)
+* **Database:** MySQL
+* **Backend & API:** Java (JDBC, Servlets, DAO Pattern)
+* **Frontend:** JSP (JavaServer Pages), HTML/CSS
 
 ---
 
 ## Model Accuracy Results
 
-To evaluate the effectiveness of the projections, the model's predictions were tested against a holdout dataset of actual NBA games. Performance is measured using **Mean Absolute Error (MAE)**, which represents the average difference between the predicted stat line and the actual game result and **Root Mean Squared Error (RMSE)**, which represents the average magnitude between the predicted stat line and the actual game result to show resistance against outliers.
+To evaluate the effectiveness of the projections, the model's predictions were tested against a dataset of actual NBA games. Performance is measured using **Mean Absolute Error (MAE)**, which represents the average difference between the predicted stat line and the actual game result, and **Root Mean Squared Error (RMSE)**, which penalizes larger outliers.
 
 ### Overall Error Margins
 | Stat Category | Mean Absolute Error (MAE) | Root Mean Squared Error (RMSE) |
@@ -27,24 +31,25 @@ To evaluate the effectiveness of the projections, the model's predictions were t
 
 ## Architecture & Data Pipeline
 
-The project follows a standard ETL (Extract, Transform, Load) architecture:
+The project follows a robust ETL and Machine Learning architecture:
 
 1.  **Extract:** Python scripts utilize the `nba_api` library to pull massive batches of raw player game logs directly from the NBA's statistical databases.
-2.  **Transform:** The raw JSON data is loaded into Pandas DataFrames. Here, we handle missing data, filter out irrelevant exhibition games, and structure the data types.
-3.  **Load:** Using Python's MySQL connector, the cleaned DataFrames are bulk-inserted into a structured MySQL database (`player_game_logs`).
-4.  **Serve:** A Java backend establishes a JDBC connection to the MySQL database. It executes complex SQL queries to calculate real-time projections based on rolling averages (e.g., last 5 games) and serves them to the user.
+2.  **Transform:** Raw JSON data is loaded into Pandas DataFrames. Missing data is handled, irrelevant exhibition games are filtered out, and complex rolling averages (e.g., last 5/10 games, days of rest, opponent pacing) are engineered into features.
+3.  **Train & Predict:** The processed features are fed into a regularized Lasso Regression model (`LassoCV`). The model identifies the most heavily weighted statistical features and outputs quantitative projections for upcoming matchups.
+4.  **Load:** Using Python's MySQL connector, the cleaned game logs, rolling aggregates, and finalized projections are bulk-inserted into a structured MySQL database (`prediction_modeldb`).
+5.  **Serve:** A Java backend establishes a JDBC connection to the MySQL database. It executes complex SQL joins, sorts the projections using a custom `MergeSort` algorithm, and serves the daily slate to an interactive web dashboard.
 
-## Features
-*   **Multi-Season Tracking:** Capable of storing and querying thousands of game logs across multiple NBA seasons.
-*   **Automated Data Cleaning:** Safely handles missing values, DNP (Did Not Play) designations, and data anomalies before database insertion.
-*   **Dynamic Projections:** Calculates up-to-date averages for PTS, REB, and AST on the fly.
-*   **Robust Filtering:** Supports querying by specific player IDs, opposing teams, matchups, and date ranges.
+## Key Features
+* **Multi-Season Tracking:** Capable of storing and querying thousands of game logs across multiple NBA seasons.
+* **Automated Data Cleaning:** Safely handles missing values, DNP (Did Not Play) designations, and data anomalies before database insertion.
+* **Dynamic Feature Engineering:** Calculates up-to-date player form, team usage rates, and true shooting efficiency on the fly.
+* **Interactive Web Dashboard:** Sorts and displays the top daily fantasy "PRA" (Points + Rebounds + Assists) values for the current slate of games.
 
 ---
 
-## Example Query: Generating a Projection
+## Example Query: Generating Rolling Averages
 
-The Java application relies on SQL subqueries to generate predictions. Here is a query used to grab a player's stats from the last 5 games, which dictates recent form:
+The Java application relies on a relational database architecture. Here is an example of the logic used to isolate a player's recent form to weigh against their season baseline:
 
 ```sql
 SELECT player_id,
@@ -58,3 +63,41 @@ FROM (
     ORDER BY game_date DESC
     LIMIT 5
 ) AS last5_games;
+```
+
+---
+
+## Installation & Setup
+
+### Prerequisites
+* Python 3.x
+* Java Development Kit (JDK) 11+
+* MySQL Server
+* Apache Tomcat (or preferred Java web server)
+
+### Database Configuration
+* Start your local MySQL server.
+* Execute the `database/schema.sql` script to initialize the `prediction_modeldb` tables.
+
+### Python Environment Setup
+Navigate to the project directory and install the required Python libraries:
+
+```bash
+pip install -r requirements.txt
+```
+
+### Running the Pipeline
+Run the main extraction and modeling script to populate your database with today's projections:
+
+```bash
+python scrapers_and_models/model_training.py
+```
+
+### Launching the Dashboard
+* Deploy the Java application to your Tomcat server.
+* Navigate to `http://localhost:8080/nba_dfs_dashboard` to view the day's top projections
+
+### Future Enhancements
+* Live Injury Integrations: Automate the scraping of daily injury reports to adjust usage rates for remaining active players.
+* Cloud Deployment: Migrate the MySQL database and Java backend to AWS (RDS/EC2) for continuous, automated daily cron jobs.
+* Positional Projections: Train and test the model on common defensive psotional targets

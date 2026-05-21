@@ -70,7 +70,7 @@ FROM (
 ## Installation & Setup
 
 ### Prerequisites
-* Python 3.x
+* Python 3
 * Java Development Kit (JDK) 11+
 * MySQL Server
 * Apache Tomcat (or preferred Java web server)
@@ -90,7 +90,7 @@ pip install -r requirements.txt
 Run the main extraction and modeling script to populate your database with today's projections:
 
 ```bash
-python scrapers_and_models/model_training.py
+python model_training.py
 ```
 
 ### Launching the Dashboard

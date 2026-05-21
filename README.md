@@ -79,13 +79,6 @@ FROM (
 * Start your local MySQL server.
 * Execute the `database/schema.sql` script to initialize the `prediction_modeldb` tables.
 
-### Python Environment Setup
-Navigate to the project directory and install the required Python libraries:
-
-```bash
-pip install -r requirements.txt
-```
-
 ### Running the Pipeline
 Run the main extraction and modeling script to populate your database with today's projections:
 

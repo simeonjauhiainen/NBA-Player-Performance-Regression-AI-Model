@@ -71,6 +71,7 @@ python model_training.py
 * Navigate to `http://localhost:8080/nba_dfs_dashboard` to view the day's top projections
 
 ### Future Enhancements
+* Automate daily game scraping
 * Live Injury Integrations: Automate the scraping of daily injury reports to adjust usage rates for remaining active players.
 * Cloud Deployment: Migrate the MySQL database and Java backend to AWS (RDS/EC2) for continuous, automated daily cron jobs.
 * Positional Projections: Train and test the model on common defensive psotional targets

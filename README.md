@@ -47,26 +47,6 @@ The project follows a robust ETL and Machine Learning architecture:
 
 ---
 
-## Example Query: Generating Rolling Averages
-
-The Java application relies on a relational database architecture. Here is an example of the logic used to isolate a player's recent form to weigh against their season baseline:
-
-```sql
-SELECT player_id,
-       AVG(pts) AS avg_pts,
-       AVG(reb) AS avg_reb,
-       AVG(ast) AS avg_ast
-FROM (
-    SELECT *
-    FROM player_game_logs
-    WHERE player_id = ?
-    ORDER BY game_date DESC
-    LIMIT 5
-) AS last5_games;
-```
-
----
-
 ## Installation & Setup
 
 ### Prerequisites

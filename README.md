@@ -3,7 +3,7 @@
 > An end-to-end data pipeline and web application designed to forecast NBA player performance (Points, Rebounds, Assists) using historical game data and machine learning.
 
 ## Overview
-Rather than relying on manual spreadsheet tracking, this system automates the entire daily fantasy sports analytical process. It extracts live data from the NBA's official endpoints, cleans and stores it in a relational database, generates predictions using a Lasso regression model, and serves the top value plays through a custom Java web dashboard. 
+Rather than relying on manual spreadsheet tracking, this system automates the entire daily fantasy sports analytical process. It extracts live data from the NBA's official endpoints, cleans and stores it in a relational database, generates predictions using a Lasso regression model, and generates the top value plays through a custom Java web dashboard. 
 
 The model factors in season averages, rolling game trends, rest advantages, and opponent defensive pacing to calculate precise performance projections.
 

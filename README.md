@@ -72,6 +72,6 @@ python model_training.py
 
 ### Future Enhancements
 * Automate daily game scraping
-* Live Injury Integrations: Automate the scraping of daily injury reports to adjust usage rates for remaining active players.
-* Cloud Deployment: Migrate the MySQL database and Java backend to AWS (RDS/EC2) for continuous, automated daily cron jobs.
-* Positional Projections: Train and test the model on common defensive psotional targets
+* Automate the scraping of daily injury reports to adjust usage rates for remaining active players.
+* Migrate the MySQL database and Java backend to AWS (RDS/EC2) for continuous, automated daily cron jobs.
+* Train and test the model on common defensive psotional targets

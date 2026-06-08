@@ -70,6 +70,8 @@ python model_training.py
 * Deploy the Java application to your Tomcat server.
 * Navigate to `http://localhost:8080/nba_dfs_dashboard` to view the day's top projections
 
+![NBA Player Performance Regression AI Model](Dashboard.png)
+
 ### Future Enhancements
 * Automate daily game scraping
 * Automate the scraping of daily injury reports to adjust usage rates for remaining active players.

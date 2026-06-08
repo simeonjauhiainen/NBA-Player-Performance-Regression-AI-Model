@@ -60,7 +60,13 @@ The project follows a robust ETL and Machine Learning architecture:
 * Execute the `database/schema.sql` script to initialize the `prediction_modeldb` tables.
 
 ### Running the Pipeline
-Run the main extraction and modeling script to populate your database with today's projections:
+Run this to grab the updated game logs:
+
+```bash
+python load_game_logs.py
+```
+
+Run this to retrain the model and produce today's projections:
 
 ```bash
 python model_training.py
